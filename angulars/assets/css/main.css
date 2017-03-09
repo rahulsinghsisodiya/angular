@@ -1,0 +1,127 @@
+
+@font-face {
+  font-family: 'MyriadPro-Regular';
+  src: url('MyriadPro-Regular.eot') format('embedded-opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+body{
+
+    font-family: century gothic; 
+}
+.uppder-header{
+    
+    
+    background-image:url('../images/headerstrip.jpg');
+    background-repeat: repeat-x;
+}
+.header_text,.header_text a {
+  color: #fff;
+  font-size: 18px;
+  font-weight: bold;
+  text-decoration: none;
+  text-align: right;
+}
+.text_title > h3 {
+  color: #fff;
+  font-size: 34px;
+  font-weight: bold;
+  margin-bottom: 2%;
+  margin-top: 6%;
+  text-decoration: none;
+  text-transform: uppercase;
+  word-spacing: 5px;
+}
+.logo >img{
+    width: 180px;
+     margin-top: 10px;
+  position: absolute;
+}
+
+.menu-bg{
+  background-image:url('../images/menu.jpg') !important;
+    background-repeat: repeat-x;  
+}
+.navbar{
+ background: transparent !important;
+ border: 0px !important;
+ margin-bottom: 0px !important;
+      
+}
+.navbar-nav li a {
+  color: #fff !important;
+  font-size: 18px;
+}
+.navbar-nav   .active > a {
+    
+  background-color: transparent !important;
+
+}
+.navbar-nav > li > a {
+  padding-bottom: 15px;
+  padding-right: 40px;
+  padding-top: 15px;
+}
+.page-title > h2{
+    font-size: 60px;
+    text-align: center;
+    
+}
+.page-details > p{
+    font-family: 'MyriadPro-Regular';
+    font-size: 25px;
+    margin-top: 28px;
+    margin-bottom: 28px;
+}
+.copy-right{
+   font-family: 'MyriadPro-Regular';
+   color: #fff;
+   font-size: 14px;
+   margin-top: 29px;
+}
+.social img {
+  width: 28px;
+}
+.social ul li {
+  float: left;
+  list-style: outside none none;
+  margin-left: 10px;
+  margin-top: 23px;
+}
+.social > ul {
+  padding-left: 54%;
+}
+.footer-img > img{
+    margin-top: 10px;margin-bottom: 5px;
+}
+.list-details li {
+  color: #000;
+  font-size: 20px;
+}
+.list-details  a {
+  color: #000;
+}
+.gallery{margin-bottom: 20px;}
+.gallery > img {
+  border-radius: 15px;
+}
+.contact-details{
+  font-family: 'MyriadPro-Regular';
+   
+   font-size: 22px;  
+  
+}
+ .contact-left > p{
+  font-family: 'MyriadPro-Regular';
+   
+   font-size: 22px;  
+}
+.contact-left > h3{
+    font-family: century gothic; 
+    font-weight: bold;
+    font-size: 30px;
+    margin: 0px;
+    padding: 0px;
+    margin-bottom: 10px;
+}
+.map{margin-top: 50px;}
