@@ -216,9 +216,19 @@
             $this->load->model('Slider_model');
             $dataValues = Array();
             $dataValues = json_decode(file_get_contents('php://input'), true);
-           
             $last_id = $this->Slider_model->saveclient($dataValues);
             $data = 'Suss';
+            echo json_encode($data);
+            
+        }
+        public function getclient_json()
+        {  
+            
+            $data = Array();
+            $this->load->model('Slider_model');
+            $dataValues = Array();
+            $data = $this->Slider_model->getallclient();
+        
             echo json_encode($data);
             
         }

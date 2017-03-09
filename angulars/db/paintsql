@@ -1,0 +1,616 @@
+/*
+SQLyog Ultimate v11.33 (64 bit)
+MySQL - 5.6.28-0ubuntu0.15.04.1 : Database - paint
+*********************************************************************
+*/
+
+/*!40101 SET NAMES utf8 */;
+
+/*!40101 SET SQL_MODE=''*/;
+
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+/*Table structure for table `admin` */
+
+DROP TABLE IF EXISTS `admin`;
+
+CREATE TABLE `admin` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `first_name` varchar(35) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `last_name` varchar(35) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `username` varchar(35) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `password` varchar(35) COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+/*Data for the table `admin` */
+
+insert  into `admin`(`id`,`first_name`,`last_name`,`username`,`password`) values (1,NULL,NULL,'admin','21232f297a57a5a743894a0e4a801fc3');
+
+/*Table structure for table `alerts` */
+
+DROP TABLE IF EXISTS `alerts`;
+
+CREATE TABLE `alerts` (
+  `alertid` int(11) NOT NULL AUTO_INCREMENT,
+  `type` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
+  `providerid` int(11) unsigned NOT NULL,
+  `userid` int(11) unsigned NOT NULL,
+  `message` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `status` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`alertid`),
+  KEY `providerid` (`providerid`),
+  KEY `userid` (`userid`),
+  CONSTRAINT `alerts_ibfk_1` FOREIGN KEY (`providerid`) REFERENCES `providers` (`providerid`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `alerts_ibfk_2` FOREIGN KEY (`userid`) REFERENCES `users` (`userid`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+/*Data for the table `alerts` */
+
+/*Table structure for table `bid_percent` */
+
+DROP TABLE IF EXISTS `bid_percent`;
+
+CREATE TABLE `bid_percent` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `minbudget` decimal(8,0) NOT NULL DEFAULT '0',
+  `maxbudget` decimal(8,0) NOT NULL DEFAULT '0',
+  `percent` decimal(4,2) NOT NULL DEFAULT '0.00',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+
+/*Data for the table `bid_percent` */
+
+insert  into `bid_percent`(`id`,`minbudget`,`maxbudget`,`percent`) values (1,'10','20','1.00'),(2,'21','30','2.00'),(3,'31','40','3.00'),(4,'41','50','4.00'),(5,'51','60','10.00'),(6,'61','70','20.00');
+
+/*Table structure for table `cities` */
+
+DROP TABLE IF EXISTS `cities`;
+
+CREATE TABLE `cities` (
+  `cityid` mediumint(7) NOT NULL AUTO_INCREMENT,
+  `cityname` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `postalcode` varchar(5) COLLATE utf8_unicode_ci NOT NULL,
+  `regionid` mediumint(7) NOT NULL,
+  `insee_id` varchar(5) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`cityid`),
+  KEY `fk_cities_1_idx` (`regionid`),
+  CONSTRAINT `FK1` FOREIGN KEY (`regionid`) REFERENCES `regions` (`regionid`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+/*Data for the table `cities` */
+
+insert  into `cities`(`cityid`,`cityname`,`postalcode`,`regionid`,`insee_id`) values (29,'Alabama Gulf Coast','36542',27,''),(30,'Greater Birmingham','35203',27,''),(31,'Black Belt','35205',27,''),(32,'Central Alabama','35057',27,''),(33,'Lower Alabama','36549',27,''),(34,'Sitka','99835',28,''),(35,'Juneau','99801',28,''),(36,'Wrangell','99929',28,''),(37,'Anchorage','99501',28,''),(38,'Jacksonville','32202',35,''),(39,'Anaconda','59711',45,''),(40,'Butte','59701',45,''),(41,'Oklahoma City','73102',46,''),(42,'Houston','77002',47,''),(43,'Dallas','77007',47,''),(44,'Fort Worth','76102',47,''),(45,'El Paso','79901',47,''),(46,'Corpus Christi','78401',47,''),(47,'Brownsville','78520',47,'');
+
+/*Table structure for table `client` */
+
+DROP TABLE IF EXISTS `client`;
+
+CREATE TABLE `client` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+/*Data for the table `client` */
+
+insert  into `client`(`id`,`name`) values (1,'xcvxcv'),(2,'xcvxcv'),(3,'raghul'),(4,'singh'),(5,'sisodiya'),(6,'cvbcvb'),(7,'cvbcvb'),(8,'sdfsdf'),(9,'cvbcvb'),(10,'zxczxc');
+
+/*Table structure for table `cms` */
+
+DROP TABLE IF EXISTS `cms`;
+
+CREATE TABLE `cms` (
+  `pageid` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `pagelanguage` varchar(15) DEFAULT NULL,
+  `pagename` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `pagetitle` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `pagecontent` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `leftcontent` text NOT NULL,
+  `about_image` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`pageid`)
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=latin1;
+
+/*Data for the table `cms` */
+
+insert  into `cms`(`pageid`,`pagelanguage`,`pagename`,`pagetitle`,`pagecontent`,`leftcontent`,`about_image`) values (9,'English','About','About Us','<p>Best Painting and Wallpaper, Inc. has been providing the community with outstanding service since 1988.<br />\r\n<br />\r\nWe offer the same, high-quality interior and exterior services that larger commercial companies do - but with more care for the customer. Call us old-fashioned, but our business model focuses on creating AND maintaining long-term, trusting relationships with our employees, suppliers, and most importantly, our customers.<br />\r\n<br />\r\nAt Best Painting and Wallpaper, every single job is completed with experience, integrity, professionalism, and quality. Whether it&rsquo;s redoing your home&rsquo;s exterior or redesigning the interior of your office space, we will be there every step of the way to ensure you, the<br />\r\ncustomer, are 100% satised. We don&rsquo;t just throw paint on walls - everything from picking colors to the actual painting is done meticulously to ensure your living space supports your every need.<br />\r\n<br />\r\nJeff Williams, owner of Best Painting and Wallpaper, Inc. fully understands the potential hangups of both interior and exterior painting. In order to guarantee your satisfaction and peace of mind, he personally oversees each and every job from estimate to completion. His personal involvement in every job allows all of the company&rsquo;s work to be 100% guaranteed.</p>\r\n','','ea032az8m2.jpg'),(16,'English','Contact','Contact Us','<p>&nbsp;</p>\r\n\r\n<p>At Best Painting and Wallpaper, we want you to know just how dedicated we are to all your painting needs. Give us a call or send us an email and we will get back to you within 24 hours.</p>\r\n','<p style=\"box-sizing: border-box; margin: 0px 0px 10px; font-family: MyriadPro-Regular; font-size: 22px;\">Jeff Williams</p>\r\n\r\n<p style=\"box-sizing: border-box; margin: 0px 0px 10px; font-family: MyriadPro-Regular; font-size: 22px;\">JeffW@yourbestpainting.com</p>\r\n\r\n<p style=\"box-sizing: border-box; margin: 0px 0px 10px; font-family: MyriadPro-Regular; font-size: 22px;\">P: (630) 378-9381</p>\r\n\r\n<p style=\"box-sizing: border-box; margin: 0px 0px 10px; font-family: MyriadPro-Regular; font-size: 22px;\">C: (708) 767-0991</p>\r\n',NULL),(22,'english','Home','WELCOME!','<p>Best Painting and Wallpaper can help you with all your painting needs, and more!</p>\r\n\r\n<p>Whether it&rsquo;s interior or exterior painting, or wallpaper removal and installation, let us help you create your ideal living space. We also offer many other services, such as drywall repair and wood installation.</p>\r\n\r\n<p>At Best Painting and Wallpaper, we take extreme pride in our craftsmanship and use of only the highest quality materials. We offer competitive pricing and we guarantee our work. Emergency/insurance work is well-done, and we also work with real estate agencies and property management companies.</p>\r\n\r\n<p>Whether your project is small or large, if timely, cost-effective and quality works counts... CALL THE BEST!</p>\r\n','',NULL),(24,'english','interior','Interior','<p>Best Painting and Wallpaper offers a variety of interior services for both residential and commercial customers:</p>\r\n\r\n<ul>\r\n	<li>\r\n	<h3>Painting</h3>\r\n	</li>\r\n	<li>\r\n	<h3>Staining</h3>\r\n	</li>\r\n	<li>\r\n	<h3>Wallpaper Removal</h3>\r\n	</li>\r\n	<li>\r\n	<h3>Drywall Replacement</h3>\r\n	</li>\r\n	<li>\r\n	<h3>Wall Repairs</h3>\r\n	</li>\r\n	<li>\r\n	<h3>Ceiling Repairs</h3>\r\n	</li>\r\n	<li>\r\n	<h3>Spray Work</h3>\r\n	</li>\r\n	<li>\r\n	<h3>Insurance Work</h3>\r\n	</li>\r\n</ul>\r\n\r\n<p>*ALL interior painting jobs are prepped, caulked, spot-primed, and have two finish coats applied.</p>\r\n\r\n<p>Every area being worked in is properly contained with covers and tarps to ensure your floors and living space are left as clean as we found them. We guarantee the use of top-quality materials (Benjamin Moor and Sherwin Williams) and high-quality craftsmanship</p>\r\n','',NULL),(25,'english','exterior','Exterior','<p>Best Painting and Wallpaper offers a variety of exterior services for both residential and commercial customers:</p>\r\n\r\n<ul>\r\n	<li>\r\n	<h3>Painting</h3>\r\n	</li>\r\n	<li>\r\n	<h3>Staining</h3>\r\n	</li>\r\n	<li>\r\n	<h3>Powerwashing</h3>\r\n	</li>\r\n	<li>\r\n	<h3>Wood Replacement</h3>\r\n	</li>\r\n	<li>\r\n	<h3>Inground Pool Painting</h3>\r\n	</li>\r\n	<li>\r\n	<h3>Spray Work</h3>\r\n	</li>\r\n	<li>\r\n	<h3>Insurance Work</h3>\r\n	</li>\r\n	<li>\r\n	<h3>Snow Plowing/Removal</h3>\r\n	</li>\r\n</ul>\r\n\r\n<p>*ALL exterior painting jobs are powerwashed, prepped, caulked, spot-primed, and have two finish coats applied.</p>\r\n\r\n<p>Every area being worked in is properly contained with covers and tarps to ensure your floors and living space are left as clean as we found them. We guarantee the use of top-quality materials (Benjamin Moor and Sherwin Williams) and high-quality craftsmanship</p>\r\n','',NULL);
+
+/*Table structure for table `emailtemplate` */
+
+DROP TABLE IF EXISTS `emailtemplate`;
+
+CREATE TABLE `emailtemplate` (
+  `templateid` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `templatename` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `subject` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `content` text COLLATE utf8_unicode_ci,
+  `keys` text COLLATE utf8_unicode_ci,
+  PRIMARY KEY (`templateid`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+/*Data for the table `emailtemplate` */
+
+insert  into `emailtemplate`(`templateid`,`templatename`,`subject`,`content`,`keys`) values (2,'Signup Email','Welcome to my website','<p>Welcome to {{sitename}}.<br />\r\n&nbsp;<br />\r\n{{fullname}}<br />\r\nActivate yourself by clicking here<br />\r\n{{activation_url}}</p>\r\n','<p>\r\n<table>\r\n<tr>\r\n<td>{{sitename}}</td>\r\n<td>Site name</td>\r\n</tr>\r\n<tr>\r\n<td>{{fullname}}</td>\r\n<td>Provider name</td>\r\n</tr>\r\n<tr>\r\n<td>{{activation_url}}</td>\r\n<td>Activation url</td>\r\n</tr>\r\n</table>\r\n</p>\r\n'),(3,'Forgot Password Email','Password Reset Notification','<p>Dear {{fullname}},</p>\n\n<p>This email was sent automatically by {{sitename}} in response to your request to reset your password.</p>\n\n<p>Your username is: {{email}}</p>\n\n<p>Your temporary password is: {{password}}</p>\n\n<p>You can change your password anytime by going to &quot;My account&quot; section.</p>\n\n<p><br />\nWarm Regards,</p>\n\n<p>{{sitename}}</p>\n','<p>\r\n<table>\r\n<tr>\r\n<td>{{sitename}}</td>\r\n<td>Site name</td>\r\n</tr>\r\n<tr>\r\n<td>{{fullname}}</td>\r\n<td>Name</td>\r\n</tr>\r\n<tr>\r\n<td>{{email}}</td>\r\n<td>Email</td>\r\n</tr>\r\n<tr>\r\n<td>{{password}}</td>\r\n<td>Password</td>\r\n</tr>\r\n</table>'),(6,'Signup Email User','Welcome to my website','<p>Welcome to {{sitename}}.<br />\r\n&nbsp;<br />\r\n{{fullname}}</br>\r\nYour temporay password is<br />\r\n{{password}}\r\n</p>\r\n','<p>\r\n<table>\r\n<tr>\r\n<td>{{sitename}}</td>\r\n<td>Site name</td>\r\n</tr>\r\n<tr>\r\n<td>{{fullname}}</td>\r\n<td>Name</td>\r\n</tr>\r\n<tr>\r\n<td>{{password}}</td>\r\n<td>Password</td>\r\n</tr>\r\n</table>'),(7,'Request Activation','Activate Request','<p>Welcome to {{sitename}}.<br />\r\n{{fullname}}</br>\r\n\r\nActivate your request  #{{requestno}} by clicking below\r\n<br />\r\n{{activationurl}}\r\n\r\nYour Contact Details\r\n\r\n<table>\r\n<tr>\r\n<td>Contact Name</td>\r\n<td>{{contactname}}</td>\r\n</tr>\r\n<tr>\r\n<td>Contact  Email</td>\r\n<td>{{contactemail}}</td>\r\n</tr>\r\n<tr>\r\n<td>Main Phone</td>\r\n<td>{{mainphone}}</td>\r\n</tr>\r\n<tr>\r\n<td>Secondary  Phone</td>\r\n<td>{{secondaryphone}}</td>\r\n</tr>\r\n</table>\r\n\r\n</p>\r\n','<table>\r\n<tr>\r\n<td>{{sitename}}</td>\r\n<td>Site Name</td>\r\n</tr>\r\n<tr>\r\n<td>{{fullname}}</td>\r\n<td>Name</td>\r\n</tr>\r\n<tr>\r\n<td>{{requestno}}</td>\r\n<td>Request No</td>\r\n</tr>\r\n<tr>\r\n<td>{{activation_url}}</td>\r\n<td>Activation url</td>\r\n</tr>\r\n<tr>\r\n<td>{{contactname}}</td>\r\n<td>Contact Name</td>\r\n</tr>\r\n<tr>\r\n<td>{{contactemail}}</td>\r\n<td>Contact  Email</td>\r\n</tr>\r\n<tr>\r\n<td>{{mainphone}}</td>\r\n<td>Main Phone</td>\r\n</tr>\r\n<tr>\r\n<td>{{secondaryphone}}</td>\r\n<td>Secondary  Phone</td>\r\n</table>\r\n'),(8,'Response','Response on request','<p>Welcome to {{sitename}}.</p>\r\n\r\n<p>&nbsp;{{contactname}}</p>\r\n\r\n<p>Your have received a new response for Request Number:<strong>#{{requestno}}</strong></p>\r\n\r\n<p>Response Number: <strong>{{responseno}}</strong><br />\r\nProvider Name: <strong>{{providername}}</strong><br />\r\nOffered Price: <strong>{{offeredprice}}</strong><br />\r\nClick here to see more details {{referenceurl}}\r\n</p>\r\n','<table>\r\n<tr>\r\n<td>{{sitename}}</td>\r\n<td>Site Name</td>\r\n</tr>\r\n<tr>\r\n<td>{{contactname}}</td>\r\n<td>Contact name</td>\r\n</tr>\r\n<tr>\r\n<td>{{requestno}}</td>\r\n<td>Request No</td>\r\n</tr>\r\n<tr>\r\n<td>{{responseno}}</td>\r\n<td>Reponse No</td>\r\n</tr>\r\n<tr>\r\n<td>{{providername}}</td>\r\n<td>Provider Name</td>\r\n</tr>\r\n<tr>\r\n<td>{{offeredprice}}</td>\r\n<td>Offered price</td>\r\n</tr>\r\n<tr>\r\n<td>{{referenceurl}}</td>\r\n<td>Reference url</td>\r\n</tr>\r\n</table>\r\n'),(9,'Request Notification','Request Notification','<p>Welcome to {{sitename}}.<br />\r\n&nbsp;<br />\r\n{{providername}}\r\n<br />\r\nYour price quotation pending for Request Number:<strong>#{{requestno}}</strong><br />\r\nClick here to see details {{requesturl}}\r\n</p>','<table>\r\n<tr>\r\n<td>{{sitename}}</td>\r\n<td>Site Name</td>\r\n</tr>\r\n<tr>\r\n<td>{{providername}}</td>\r\n<td>Provider Name</td>\r\n</tr>\r\n<tr>\r\n<td>{{requestno}}</td>\r\n<td>Request No</td>\r\n</tr>\r\n<tr>\r\n<td>{{requesturl}}</td>\r\n<td>Request Url</td>\r\n</tr>\r\n</table>\r\n');
+
+/*Table structure for table `faqs` */
+
+DROP TABLE IF EXISTS `faqs`;
+
+CREATE TABLE `faqs` (
+  `faqid` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `question` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `answer` text COLLATE utf8_unicode_ci NOT NULL,
+  `createdat` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `updatedat` datetime DEFAULT NULL,
+  `orderid` int(11) DEFAULT '0',
+  PRIMARY KEY (`faqid`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+/*Data for the table `faqs` */
+
+insert  into `faqs`(`faqid`,`question`,`answer`,`createdat`,`updatedat`,`orderid`) values (2,'xx','<div>xxx</div>\r\n','2016-11-05 17:08:38','2016-11-05 17:17:30',3),(3,'zz','<p>zz</p>\r\n','2016-11-05 17:22:37',NULL,1),(4,'faq question','<p>faq question faq question faq question</p>\r\n','2016-12-16 16:27:47',NULL,2);
+
+/*Table structure for table `gallery` */
+
+DROP TABLE IF EXISTS `gallery`;
+
+CREATE TABLE `gallery` (
+  `imageid` int(11) NOT NULL AUTO_INCREMENT,
+  `imagetitle` varbinary(255) DEFAULT NULL,
+  `imagename` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `imagethumbname` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `orderid` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`imageid`)
+) ENGINE=InnoDB AUTO_INCREMENT=62 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+/*Data for the table `gallery` */
+
+insert  into `gallery`(`imageid`,`imagetitle`,`imagename`,`imagethumbname`,`orderid`) values (23,'Exterior Residential','skdqfiskds.jpg','pkm151ferc.jpg',0),(24,'Exterior Residential','g3uijvvmvf.jpg','dumooh6ze9.jpg',0),(25,'Exterior Residential','xokofnitdu.jpg','ocrpfnsij2.jpg',0),(26,'Exterior Residential','ukgn7hti2h.jpg','9gcv40dbar.jpg',0),(27,'Exterior Residential','oobxqivpxt.jpg','kptbe9zgri.jpg',0),(28,'Exterior Residential','jmcqak7tta.jpg','bcqoyvobgp.jpg',0),(29,'Exterior Residential','idwcwfhr2d.jpg','21owd2fmjx.jpg',0),(32,'Exterior Residential','ccsdtgk8mv.jpg','1n4izagkbd.jpg',0),(33,'Exterior Residential','c6ji70lozq.jpg','icsafwqa4d.jpg',0),(34,'Exterior Commercial','a371vhptko.jpg','glk5wijrmj.jpg',0),(35,'Exterior Commercial','3jzb7e4btc.jpg','u3gb5biv5c.jpg',0),(36,'Exterior Commercial','tlyeqvxjmj.jpg','tq33bahgma.jpg',0),(37,'Exterior Commercial','jqezrjbkog.jpg','mi1lnsqkcd.jpg',0),(38,'Exterior Commercial','3fe7jfi0we.jpg','bfuqfwkqgz.jpg',0),(39,'Exterior Commercial','x3hype1fzd.jpg','t2t7acnsdj.jpg',0),(40,'Exterior Commercial','6pzbfoxzfe.jpg','ychqlhvmwu.jpg',0),(42,'Interior Hangar','0qxtxhwvaa.jpg','fhzotfdqfi.jpg',0),(43,'Interior Hangar','fnuxegea2b.jpg','f21cwzusu5.jpg',0),(44,'Interior Hangar','cjmcyfrbg6.jpg','umuzjzfxjh.jpg',0),(45,'Interior Hangar','zokabg9wje.jpg','bmoyyxdq8u.jpg',0),(46,'Interior Hangar','wdhrcaqrya.jpg','97zuiakrgu.jpg',0),(47,'Interior Hangar','whqvfpstf1.jpg','ocefuhgu8p.jpg',0),(48,'Interior Hangar','5iwemeoxwv.jpg','13msy2iqwn.jpg',0),(49,'Interior Hangar','sv0wbuorpx.jpg','gufd81ixzo.jpg',0),(50,'Interior Containment','sasftqibhp.jpg','zzka6l5ucu.jpg',0),(52,'Interior Kitchen','wydh8k2eef.jpg','iw9idgqmvw.jpg',0),(53,'Interior Living Room Before','u8woeka0sz.jpg','4p7i6gs8u7.jpg',0),(54,'Interior Living Room After','oddxwhdm4i.jpg','jzrfnwayx3.jpg',0),(55,'Interior Windows Before','xbsfjywmhr.jpg','t6fxdbprnu.jpg',0),(56,'Interior Windows After','a7trnrxyqv.jpg','1o6t3q20dk.jpg',0),(57,'Pool','s6q7dtitl6.jpg','nvermbikzz.jpg',0),(58,'Pool','paxw41n71a.jpg','rthhalbjow.jpg',0),(59,'Pool','pcrd3ofm9p.jpg','lzqiwujkcl.jpg',0),(60,'Pool','vtocbpxmjm.jpg','t9ykm292oi.jpg',0),(61,'Pool','r9ihremlyo.jpg','6trv52l3p4.jpg',0);
+
+/*Table structure for table `locations` */
+
+DROP TABLE IF EXISTS `locations`;
+
+CREATE TABLE `locations` (
+  `locationid` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(64) NOT NULL,
+  `zipcode` varchar(32) NOT NULL,
+  `type` int(11) NOT NULL DEFAULT '0',
+  `external_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`locationid`)
+) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+
+/*Data for the table `locations` */
+
+insert  into `locations`(`locationid`,`name`,`zipcode`,`type`,`external_id`) values (1,'France (tout le pays)','',1,0),(2,'Ile de France (Tous les départements)','',2,0),(3,'Rhone-Alpes (Tous les départements)','',2,0),(4,'Paris (Toutes les villes)','75',3,0),(5,'Paris XV','75015',2,0),(6,'Paris XIV','75014',3,0),(7,'Hauts de Seine (Toutes les villes)','92',3,0),(8,'Issy les moulineaux','92130',3,0);
+
+/*Table structure for table `matching` */
+
+DROP TABLE IF EXISTS `matching`;
+
+CREATE TABLE `matching` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `requestid` int(11) unsigned NOT NULL,
+  `userid` int(11) unsigned NOT NULL,
+  `providerid` int(11) unsigned NOT NULL,
+  `rating` int(11) NOT NULL,
+  `ratingdetail` text COLLATE utf8_unicode_ci NOT NULL,
+  `clientmatching` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `requestid` (`requestid`),
+  KEY `providerid` (`providerid`),
+  KEY `userid` (`userid`),
+  CONSTRAINT `matching_ibfk_1` FOREIGN KEY (`requestid`) REFERENCES `requests` (`requestid`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `matching_ibfk_2` FOREIGN KEY (`userid`) REFERENCES `users` (`userid`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `matching_ibfk_3` FOREIGN KEY (`providerid`) REFERENCES `providers` (`providerid`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+/*Data for the table `matching` */
+
+/*Table structure for table `provider_ledger` */
+
+DROP TABLE IF EXISTS `provider_ledger`;
+
+CREATE TABLE `provider_ledger` (
+  `ledgerid` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `transactiontype` enum('Purchase','Lead','Bonus') CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `recordid` int(11) NOT NULL DEFAULT '0',
+  `transactiondate` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `providerid` int(11) NOT NULL DEFAULT '0',
+  `amount` decimal(12,4) NOT NULL DEFAULT '0.0000',
+  `status` enum('Plus','Minus') CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`ledgerid`)
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+
+/*Data for the table `provider_ledger` */
+
+insert  into `provider_ledger`(`ledgerid`,`transactiontype`,`recordid`,`transactiondate`,`providerid`,`amount`,`status`) values (1,'Purchase',1,'2016-11-08 11:14:56',1,'20.0000','Plus'),(2,'Purchase',7,'2016-11-08 11:15:53',7,'10.0000','Plus'),(3,'Lead',1,'2016-11-08 11:27:12',1,'4.0000','Minus'),(4,'Lead',2,'2016-11-08 16:10:41',7,'4.0000','Minus'),(5,'Purchase',7,'2016-12-17 05:15:48',13,'60.0000','Plus'),(6,'Lead',0,'2016-12-17 05:17:49',13,'10.0000','Minus'),(7,'Lead',0,'2016-12-17 05:21:29',13,'10.0000','Minus'),(8,'Lead',0,'2016-12-17 05:27:53',13,'10.0000','Minus'),(9,'Lead',3,'2016-12-17 17:20:34',13,'0.1000','Minus'),(10,'Lead',4,'2016-12-17 17:33:39',13,'7.0000','Minus'),(11,'Lead',5,'2016-12-17 17:36:10',13,'7.0000','Minus'),(12,'Lead',6,'2016-12-17 17:37:35',13,'7.0000','Minus');
+
+/*Table structure for table `provider_payment` */
+
+DROP TABLE IF EXISTS `provider_payment`;
+
+CREATE TABLE `provider_payment` (
+  `payment_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `provider_id` int(11) NOT NULL DEFAULT '0',
+  `txn_id` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `payer_id` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `payment_date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `payment_gross` decimal(6,2) NOT NULL DEFAULT '0.00',
+  `mc_currency` decimal(6,2) NOT NULL DEFAULT '0.00',
+  `payment_type` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `protection_eligibility` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `payer_status` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `payer_email` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `receiver_email` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `mc_gross` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `payment_status` enum('Pending','Success','Failure') CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT 'Pending',
+  PRIMARY KEY (`payment_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+
+/*Data for the table `provider_payment` */
+
+insert  into `provider_payment`(`payment_id`,`provider_id`,`txn_id`,`payer_id`,`payment_date`,`payment_gross`,`mc_currency`,`payment_type`,`protection_eligibility`,`payer_status`,`payer_email`,`receiver_email`,`mc_gross`,`payment_status`) values (1,1,'9FN35647U4017231N','ME4ZA3V87ERR8','2016-10-12 02:22:35','0.00','0.00','instant','Eligible','verified','gajendrabang-buyer@yahoo.com','hanwant0-business@gmail.com','20.00','Pending'),(2,7,'9FN35647U4017231B','9FN35647U4017231N','2016-10-13 16:41:22','0.00','0.00','instant','Eligible','verified','gajendrabang-buyer@yahoo.com','hanwant0-business@gmail.com','10.00','Pending'),(3,14,'','','0000-00-00 00:00:00','0.00','0.00','','','','','','','Pending'),(4,15,'','','0000-00-00 00:00:00','0.00','0.00','','','','','','','Pending'),(5,15,'','','0000-00-00 00:00:00','0.00','0.00','','','','','','','Pending'),(6,15,'','','0000-00-00 00:00:00','0.00','0.00','','','','','','','Pending'),(7,13,'4BB462798P982664G','ME4ZA3V87ERR8','2016-12-17 05:15:48','0.00','0.00','instant','Eligible','verified','gajendrabang-buyer@yahoo.com','hanwant0-business@gmail.com','60.00','Pending');
+
+/*Table structure for table `provider_token` */
+
+DROP TABLE IF EXISTS `provider_token`;
+
+CREATE TABLE `provider_token` (
+  `tokenid` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `email` varchar(35) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `token` varchar(23) COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`tokenid`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+/*Data for the table `provider_token` */
+
+insert  into `provider_token`(`tokenid`,`email`,`token`) values (3,'lalit@gmail.com','58132f8d37eba4.72562567'),(4,'lalitlakhara@gmail.com','583e926e203dd8.29748333'),(5,'ravi@gmail.com','584105adce3ff5.46436457'),(6,'rahul123@gmail.com','585238d14da585.26882107'),(7,'rahulsingh@gmail.com','58527b6ec42312.76346071'),(8,'rahulsisodiya.singh3@gmail.com','585292e7afd870.44698387'),(9,'dinesh@gmail.com','5853b5f47d1ff6.25688299'),(10,'rahulprovide@gmail.com','58550419450803.36138270');
+
+/*Table structure for table `providercities` */
+
+DROP TABLE IF EXISTS `providercities`;
+
+CREATE TABLE `providercities` (
+  `providerid` int(11) NOT NULL,
+  `cityid` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+/*Data for the table `providercities` */
+
+insert  into `providercities`(`providerid`,`cityid`) values (2,29),(2,35),(2,36),(2,28),(3,34),(3,40),(3,45),(4,38),(4,36),(4,32),(4,31),(5,28),(5,34),(5,33),(5,32),(6,29),(6,30),(6,32),(6,31),(8,34),(8,36),(8,29),(8,32),(8,34),(9,32),(10,33),(12,39),(12,40),(13,41),(13,32),(13,32),(13,30),(13,33),(1,36),(1,35),(1,34),(1,33),(1,32),(1,30),(1,38),(14,29),(14,31),(14,32),(14,30),(14,33),(7,29),(7,38),(7,40),(7,43),(7,42),(15,29),(15,31),(15,32),(15,30),(15,33),(15,37),(15,35),(15,34),(15,36),(15,38),(15,39),(15,40),(15,41),(15,47),(15,46),(15,43),(15,45),(15,44),(15,42),(17,29),(17,31),(17,32),(17,30),(17,33),(17,37),(17,35),(17,34),(17,36),(17,38),(17,39),(17,40),(17,41),(17,47),(17,46),(17,43),(17,45),(17,44),(17,42);
+
+/*Table structure for table `providerlocation` */
+
+DROP TABLE IF EXISTS `providerlocation`;
+
+CREATE TABLE `providerlocation` (
+  `providerid` int(11) NOT NULL,
+  `locationid` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+/*Data for the table `providerlocation` */
+
+insert  into `providerlocation`(`providerid`,`locationid`) values (9,1),(9,2),(9,8),(9,4),(9,6),(9,5),(9,3),(9,7),(11,1),(11,2),(11,7),(10,1),(10,7),(10,2),(12,7),(12,8),(12,4),(12,6),(12,5),(1,7),(1,5),(1,6),(1,8),(14,1),(14,2),(14,8),(14,4),(15,1);
+
+/*Table structure for table `providers` */
+
+DROP TABLE IF EXISTS `providers`;
+
+CREATE TABLE `providers` (
+  `providerid` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `providername` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `providerslug` varchar(150) COLLATE utf8_unicode_ci NOT NULL,
+  `email` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `password` varchar(40) COLLATE utf8_unicode_ci NOT NULL,
+  `companyname` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `companytype` enum('','type1','type2','type3','type4') COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `siren` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `phone` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
+  `address` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `zipcode` varchar(6) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `picture` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `cesunumber` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `deductilibity` enum('0','1') COLLATE utf8_unicode_ci NOT NULL DEFAULT '0',
+  `request` enum('0','1') COLLATE utf8_unicode_ci NOT NULL DEFAULT '0',
+  `agreementnumber` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `status` enum('','Active','Blocked') COLLATE utf8_unicode_ci DEFAULT '',
+  `createdat` datetime NOT NULL,
+  `updatedat` datetime DEFAULT NULL,
+  PRIMARY KEY (`providerid`)
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+/*Data for the table `providers` */
+
+insert  into `providers`(`providerid`,`providername`,`providerslug`,`email`,`password`,`companyname`,`companytype`,`siren`,`phone`,`address`,`zipcode`,`picture`,`cesunumber`,`deductilibity`,`request`,`agreementnumber`,`status`,`createdat`,`updatedat`) values (1,'hanwant','hanwant','hanwant0@gmail.com','e10adc3949ba59abbe56e057f20f883e','hanwant','type2','ds','7737636535','SP49, 27, 86011 Baranello CB, Italy price test','01234','bmqzi8p3xm.jpg','','0','1','1234','Active','2016-09-21 15:24:20','2016-12-15 17:06:17'),(7,'rahul','rahul','rahul@gmail.com','e10adc3949ba59abbe56e057f20f883e','rocksa','type1','12345','8233457896','SP49, 27, 86011 Baranello CB, Italy price test','01640','','dd','1','1','','Active','2016-09-23 18:10:34','2016-09-24 18:45:10'),(8,'lalit','lalit','lalit@gmail.com','e10adc3949ba59abbe56e057f20f883e','jugad technologies','type1','0143','7737678279','12 th road','24380',NULL,'3410','1','1','','Active','2016-10-28 16:29:24','2016-11-04 12:50:13'),(9,'lalit','lalit-1','lalitlakhara@gmail.com','e10adc3949ba59abbe56e057f20f883e','altus tendo ','type1','lalit','7737678279','dfsdfsdsfsdf','75','w0qbjboibi.jpg','','0','1','','','2016-11-30 14:18:44','2016-11-30 16:33:58'),(10,'Akash','akash','akash@gmail.com','e10adc3949ba59abbe56e057f20f883e','LG LED','type1','lalit','7737678279','computer computer computer computer computer computer computer computer computer computer computer computer computer','342003','','345','0','1','4545454','Active','2016-12-02 10:51:32','2016-12-15 11:12:59'),(11,'ravi','ravi','ravi@gmail.com','e10adc3949ba59abbe56e057f20f883e','altus tendo','type2','lalit','7737678279','dfadsasdf','34203','',NULL,'0','1',NULL,'Active','2016-12-02 10:55:01',NULL),(12,'rahul','rahul-1','rahul123@gmail.com','e10adc3949ba59abbe56e057f20f883e','test','type2','xc','825666565','cvb','35644','xept3vg4n7.jpg','5435','0','1','345','Active','2016-12-15 12:01:44','2016-12-15 14:29:49'),(13,'lalit','lalit-2','rahulsingh@gmail.com','e10adc3949ba59abbe56e057f20f883e','altus','type2','tre','0823363682','hhi','97729','l5439qnjxh.png',NULL,'0','1',NULL,'Active','2016-12-15 16:45:57','2016-12-17 15:28:37'),(14,'lalit','lalit-3','rahulsisodiya.singh3@gmail.com','e10adc3949ba59abbe56e057f20f883e','test','type1','test','8233636789','vb','59711','xjse9uip8r.jpeg','','0','1','','Active','2016-12-15 18:26:07','2016-12-15 18:27:43'),(15,'dinesh','dinesh','dinesh@gmail.com','e10adc3949ba59abbe56e057f20f883e','dinesh','type1','s','89696578','xc','35222','ehoyl9ddoq.jpg','5435','0','1','345','Active','2016-12-16 15:07:54','2016-12-16 15:11:03'),(17,'provide','provide','rahulprovide@gmail.com','e10adc3949ba59abbe56e057f20f883e','aldf','type1','','12345678910','dsf','','dy4diev8ju.png',NULL,'0','1',NULL,'Active','2016-12-17 14:53:34',NULL);
+
+/*Table structure for table `providerservices` */
+
+DROP TABLE IF EXISTS `providerservices`;
+
+CREATE TABLE `providerservices` (
+  `providerid` int(11) NOT NULL,
+  `serviceid` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+/*Data for the table `providerservices` */
+
+insert  into `providerservices`(`providerid`,`serviceid`) values (2,1),(2,2),(3,2),(4,4),(4,3),(5,2),(6,4),(6,3),(8,4),(8,3),(9,3),(11,3),(10,2),(12,63),(12,6),(12,22),(12,25),(12,26),(12,29),(12,64),(12,9),(12,31),(12,36),(12,56),(12,57),(12,58),(12,61),(12,62),(12,37),(12,38),(12,39),(12,40),(12,41),(12,44),(12,45),(12,46),(12,47),(13,6),(13,20),(13,21),(13,22),(13,23),(13,24),(13,25),(13,26),(13,27),(13,28),(13,29),(13,19),(13,18),(13,7),(13,8),(13,10),(13,11),(13,12),(13,13),(13,14),(13,15),(13,16),(13,17),(13,30),(1,6),(1,22),(1,24),(1,27),(1,25),(1,28),(1,21),(14,6),(7,6),(7,20),(7,21),(7,22),(7,23),(7,24),(7,25),(7,26),(7,27),(7,28),(7,29),(7,19),(7,18),(7,7),(7,8),(7,10),(7,11),(7,12),(7,13),(7,14),(7,15),(7,16),(7,17),(7,30),(15,6),(15,20),(15,21),(15,22),(15,23),(15,24),(15,25),(15,26),(15,27),(15,28),(15,29),(15,19),(15,18),(15,7),(15,8),(15,10),(15,11),(15,12),(15,13),(15,14),(15,15),(15,16),(15,17),(15,30),(17,6),(17,18),(17,21),(17,20),(17,22),(17,23),(17,24),(17,25),(17,26),(17,27),(17,28),(17,29),(17,19),(17,7),(17,8),(17,10),(17,11),(17,12),(17,13),(17,14),(17,15),(17,16),(17,17),(17,30);
+
+/*Table structure for table `quote` */
+
+DROP TABLE IF EXISTS `quote`;
+
+CREATE TABLE `quote` (
+  `id` int(255) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `phone_no` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `message` varchar(300) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `email_address` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+/*Data for the table `quote` */
+
+/*Table structure for table `regions` */
+
+DROP TABLE IF EXISTS `regions`;
+
+CREATE TABLE `regions` (
+  `regionid` mediumint(7) NOT NULL AUTO_INCREMENT,
+  `regionname` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `insee_id` varchar(5) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`regionid`)
+) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+/*Data for the table `regions` */
+
+insert  into `regions`(`regionid`,`regionname`,`insee_id`) values (27,'Alabama',''),(28,'Alaska',''),(29,'Arizona',''),(30,'Arkansas',''),(31,'California',''),(32,'Colorado',''),(33,'Connecticut',''),(34,'Delaware',''),(35,'Florida',''),(36,'Georgia',''),(37,'Hawaii',''),(38,'Idaho',''),(39,'Illinois',''),(40,'Indiana',''),(41,'Iowa',''),(42,'Kansas',''),(43,'Kentucky',''),(44,'Louisiana',''),(45,'Montana',''),(46,'Oklahoma',''),(47,'Texas','');
+
+/*Table structure for table `request_token` */
+
+DROP TABLE IF EXISTS `request_token`;
+
+CREATE TABLE `request_token` (
+  `tokenid` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `requestid` int(11) NOT NULL,
+  `token` varchar(23) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`tokenid`)
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+/*Data for the table `request_token` */
+
+insert  into `request_token`(`tokenid`,`requestid`,`token`) values (1,1,'582167c2978a29.61329631'),(2,3,'5851175c834751.94933985'),(3,4,'58514b8b3b0c61.61454686'),(4,5,'585290ba31d806.37534831'),(5,6,'58538fd770e308.00043498'),(6,7,'5853b3eb50c615.74446894'),(7,8,'5853b58495a455.72564405'),(8,9,'5853c7a790d236.29881157'),(9,10,'5853cf1d139a62.69815524'),(10,11,'5853d3665f6809.17563312'),(11,12,'5854d033b7f6b7.64878619'),(12,13,'58551092a32a77.43937071');
+
+/*Table structure for table `requests` */
+
+DROP TABLE IF EXISTS `requests`;
+
+CREATE TABLE `requests` (
+  `requestid` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `requestno` decimal(8,0) NOT NULL,
+  `userid` int(10) NOT NULL,
+  `name` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `email` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `mainphone` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
+  `surname` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `zipcode` varchar(5) COLLATE utf8_unicode_ci NOT NULL,
+  `serviceid` int(11) NOT NULL,
+  `subserviceid` int(11) DEFAULT NULL,
+  `projectstart` date NOT NULL,
+  `projectstartdays` enum('','6','7','14','30','60','90','180') COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `requestconcerns` enum('','Individual','Enterprise','Developer','Coproprieté','Association','Public organization') COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `projectdetail` text COLLATE utf8_unicode_ci,
+  `budget` decimal(8,0) NOT NULL,
+  `status` enum('0','1') COLLATE utf8_unicode_ci DEFAULT '0',
+  `verified` enum('0','1') COLLATE utf8_unicode_ci DEFAULT '0',
+  `validated` enum('0','1') COLLATE utf8_unicode_ci DEFAULT '0',
+  `createdat` datetime NOT NULL,
+  `updatedat` datetime DEFAULT NULL,
+  PRIMARY KEY (`requestid`),
+  KEY `fk_request_1_idx` (`userid`)
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+/*Data for the table `requests` */
+
+insert  into `requests`(`requestid`,`requestno`,`userid`,`name`,`email`,`mainphone`,`surname`,`zipcode`,`serviceid`,`subserviceid`,`projectstart`,`projectstartdays`,`requestconcerns`,`projectdetail`,`budget`,`status`,`verified`,`validated`,`createdat`,`updatedat`) values (1,'75709638',3,'hanwant','hanwant0@gmail.com','7737636535',NULL,'35203',1,39,'2016-11-22','14','Enterprise','','100','1',NULL,'1','2016-11-08 11:20:58','2016-11-08 12:01:54'),(2,'77806331',2,'khuswant','khuswant0@gmail.com','7597070244',NULL,'35203',2,39,'2016-12-08','30','Enterprise','project details goes here','30','1',NULL,'1','2016-11-08 12:04:53','2016-11-08 12:06:11'),(3,'98265605',7,'dfgdfg','rahul123xc@gmail.com','8233555555555','dfg','35203',4,39,'2016-12-29','14','Enterprise','','100','1','1','1','2016-12-14 15:26:43','2016-12-15 11:12:08'),(4,'39985218',8,'rahul','rahul123xcfgfgffg@gmail.com','8233636152','Prasad','35203',6,31,'2017-01-13','30','Enterprise','','100','1','1','1','2016-12-14 19:09:22','2016-12-14 19:12:28'),(5,'86123742',9,'rahul','rahulsisodiya.singh3@gmail.com','8233636478','sisodiya','59711',1,8,'2016-12-22','7','Enterprise','hii','100','1','1','1','2016-12-15 18:16:49','2016-12-15 18:23:53'),(6,'56526877',10,'rahul','rahul123@gmail.com','8233555555555','singh','35057',1,6,'2016-12-23','7','Enterprise',NULL,'100','0','0','0','2016-12-16 12:25:19',NULL),(7,'90335072',6,'rahul','rahul@gmail.com','7597070244','sdsdsdsd','36542',1,6,'2016-12-23','7','Individual','','100','1','1','1','2016-12-16 14:59:15','2016-12-16 15:02:00'),(8,'47291096',11,'service','request@gmail.com','8233636152','sess','36542',1,6,'2016-12-23','7','Enterprise','','100','1','1',NULL,'2016-12-16 15:06:04','2016-12-16 15:39:03'),(9,'36754359',12,'tarun','tarun@gmail.com','8236361588','singh','35057',1,6,'2016-12-23','7','Individual','','70','1','1','1','2016-12-16 16:23:27','2016-12-16 16:25:31'),(10,'40603259',13,'ravi','ravisingh@gmail.com','89669654789','singh','35057',1,6,'2017-01-15','30','Enterprise','','100','1','1','1','2016-12-16 16:55:16','2016-12-16 16:56:20'),(11,'39382037',13,'ravi','ravisingh@gmail.com','89669654789','singh','35057',6,9,'2016-12-23','7','Individual','','100','1','1','1','2016-12-16 17:13:34','2016-12-16 17:15:15'),(12,'41672214',15,'sarvan','rahulsingh12343@gmail.com','9856412347','singh','35057',1,6,'2016-12-24','7','Individual',NULL,'100','0','0','0','2016-12-17 11:12:11',NULL),(13,'53300278',14,'rahul','rahulsingh@gmail.com','823363695656','singh','35205',1,6,'2016-12-24','7','Individual',NULL,'100','0','0','0','2016-12-17 15:46:49',NULL);
+
+/*Table structure for table `requests_servicefield_trans` */
+
+DROP TABLE IF EXISTS `requests_servicefield_trans`;
+
+CREATE TABLE `requests_servicefield_trans` (
+  `requestid` int(11) NOT NULL,
+  `servicefieldid` int(11) NOT NULL,
+  `value` text COLLATE utf8_unicode_ci
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+/*Data for the table `requests_servicefield_trans` */
+
+insert  into `requests_servicefield_trans`(`requestid`,`servicefieldid`,`value`) values (14,3,'nine'),(15,2,'123'),(17,3,'nine'),(18,3,'nine'),(19,2,'dsa'),(20,3,'seven'),(21,3,'seven'),(22,4,'text'),(22,5,'08/11/2016'),(22,6,'te'),(24,4,'hanwant test'),(24,5,'19/01/2017'),(24,6,'HYE'),(24,7,'BYE'),(23,4,'rty'),(23,5,'05/01/2017'),(23,6,'tr'),(23,7,'12'),(25,2,'aebha'),(26,5,'06-10-2016'),(26,6,'12'),(26,7,'123'),(26,4,'123'),(26,8,'123'),(27,4,'office cleaning'),(28,3,'nine'),(28,4,'home cleaner'),(29,3,'nine'),(29,4,'textfield content'),(1,3,'nine'),(1,4,'textfield content'),(2,4,'textfield officecleaning'),(3,5,'01-12-2016'),(3,6,'gfh'),(3,7,'gh'),(3,4,'fgh'),(3,8,'fgh'),(7,12,'sd'),(8,12,'address'),(9,12,'rahu'),(10,12,'gh'),(10,14,'ghj'),(12,12,'sad'),(12,14,'asd'),(13,12,'address'),(13,14,'dfg'),(13,15,'fg');
+
+/*Table structure for table `requesttooltips` */
+
+DROP TABLE IF EXISTS `requesttooltips`;
+
+CREATE TABLE `requesttooltips` (
+  `id` int(3) unsigned NOT NULL AUTO_INCREMENT,
+  `language` enum('','english','french') COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `zipcode` tinytext COLLATE utf8_unicode_ci,
+  `serviceid` tinytext COLLATE utf8_unicode_ci,
+  `projectstart` tinytext COLLATE utf8_unicode_ci,
+  `requestconcerns` tinytext COLLATE utf8_unicode_ci,
+  `name` tinytext COLLATE utf8_unicode_ci,
+  `email` tinytext COLLATE utf8_unicode_ci,
+  `mainphone` tinytext COLLATE utf8_unicode_ci,
+  `secondaryphone` tinytext COLLATE utf8_unicode_ci,
+  `surname` tinytext COLLATE utf8_unicode_ci,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+/*Data for the table `requesttooltips` */
+
+insert  into `requesttooltips`(`id`,`language`,`zipcode`,`serviceid`,`projectstart`,`requestconcerns`,`name`,`email`,`mainphone`,`secondaryphone`,`surname`) values (1,'english','123','vc','cvb','vcb','cvb','rahulm@gmail.com','vb','','vcb'),(3,'french','xyz','ryu','z','y','t','u','o','x',NULL);
+
+/*Table structure for table `response` */
+
+DROP TABLE IF EXISTS `response`;
+
+CREATE TABLE `response` (
+  `responseid` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `responseno` decimal(8,0) DEFAULT NULL,
+  `requestid` int(10) NOT NULL,
+  `providerid` int(10) NOT NULL,
+  `selected` tinyint(1) DEFAULT NULL,
+  `offeredprice` decimal(8,0) NOT NULL DEFAULT '0',
+  `rating` decimal(8,0) NOT NULL,
+  `message` tinytext COLLATE utf8_unicode_ci,
+  `createdat` datetime NOT NULL,
+  `updatedat` datetime DEFAULT NULL,
+  PRIMARY KEY (`responseid`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+/*Data for the table `response` */
+
+insert  into `response`(`responseid`,`responseno`,`requestid`,`providerid`,`selected`,`offeredprice`,`rating`,`message`,`createdat`,`updatedat`) values (1,'28097989',1,1,NULL,'0','0',NULL,'2016-11-08 11:27:12',NULL),(2,'52649261',1,7,NULL,'0','0',NULL,'2016-11-08 16:10:41',NULL),(6,'20945805',9,13,NULL,'0','0','fghfghfghfgh','2016-12-17 17:37:35',NULL);
+
+/*Table structure for table `servicefields` */
+
+DROP TABLE IF EXISTS `servicefields`;
+
+CREATE TABLE `servicefields` (
+  `servicefieldid` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `fieldtitle` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `fieldtype` enum('','Text','Date','Textarea','Dropdown','Checkbox','Radio') COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `mandatory` enum('0','1') COLLATE utf8_unicode_ci NOT NULL DEFAULT '0',
+  `createdat` datetime NOT NULL,
+  `updatedat` datetime DEFAULT NULL,
+  PRIMARY KEY (`servicefieldid`)
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+/*Data for the table `servicefields` */
+
+insert  into `servicefields`(`servicefieldid`,`fieldtitle`,`fieldtype`,`mandatory`,`createdat`,`updatedat`) values (12,'Name','Text','1','2016-12-15 17:53:18','2016-12-15 17:53:41'),(13,'voltage','Dropdown','1','2016-12-16 14:51:30','2016-12-16 14:52:41'),(14,'address','Textarea','1','2016-12-16 16:52:48',NULL),(15,'rt','Text','1','2016-12-17 12:06:51',NULL);
+
+/*Table structure for table `servicefields_service_trans` */
+
+DROP TABLE IF EXISTS `servicefields_service_trans`;
+
+CREATE TABLE `servicefields_service_trans` (
+  `transid` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `servicefieldid` int(11) NOT NULL,
+  `serviceid` int(11) NOT NULL,
+  PRIMARY KEY (`transid`)
+) ENGINE=InnoDB AUTO_INCREMENT=80 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+/*Data for the table `servicefields_service_trans` */
+
+insert  into `servicefields_service_trans`(`transid`,`servicefieldid`,`serviceid`) values (54,12,6),(55,12,12),(56,12,22),(57,12,24),(58,12,26),(65,13,63),(66,13,37),(67,13,38),(68,13,39),(69,13,40),(70,13,41),(71,14,21),(72,14,6),(73,14,20),(74,14,23),(75,14,22),(76,14,25),(77,14,27),(78,15,6),(79,15,18);
+
+/*Table structure for table `servicefields_trans` */
+
+DROP TABLE IF EXISTS `servicefields_trans`;
+
+CREATE TABLE `servicefields_trans` (
+  `transid` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `servicefieldid` int(11) NOT NULL,
+  `options` text COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`transid`)
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+/*Data for the table `servicefields_trans` */
+
+insert  into `servicefields_trans`(`transid`,`servicefieldid`,`options`) values (28,12,''),(30,13,'20,40,220,11kv'),(31,14,''),(32,15,'');
+
+/*Table structure for table `services` */
+
+DROP TABLE IF EXISTS `services`;
+
+CREATE TABLE `services` (
+  `serviceid` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `servicename` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `serviceicon` varchar(100) COLLATE utf8_unicode_ci DEFAULT '',
+  `serviceslug` varchar(150) COLLATE utf8_unicode_ci NOT NULL,
+  `servicedesc` text COLLATE utf8_unicode_ci NOT NULL,
+  `orderid` int(11) NOT NULL DEFAULT '0',
+  `createdat` datetime NOT NULL,
+  `updatedat` datetime DEFAULT NULL,
+  `featured` enum('Yes','No') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'No',
+  `featured_image` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `service_image` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`serviceid`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+/*Data for the table `services` */
+
+insert  into `services`(`serviceid`,`servicename`,`serviceicon`,`serviceslug`,`servicedesc`,`orderid`,`createdat`,`updatedat`,`featured`,`featured_image`,`service_image`) values (1,'Home','service-chantier','home','<h2 class=\"Home-jumbotronTitle\">Quality Pros For a Better Home</h2>\r\n',1,'2016-09-02 19:10:12','2016-12-22 15:51:46','Yes','jdfjyyfmow.jpg','e8ultzroqe.jpg'),(2,'Landscape','service-bureaux','landscape','',6,'2016-09-02 19:10:29','2016-12-22 11:52:22','No',NULL,'rbatdo4fxr.jpg'),(3,'Pets','service-machine-a-laver','pets','',7,'2016-09-02 19:10:49','2016-12-22 12:02:45','No',NULL,'6yrdnaq4cu.jpg'),(4,'Technical support','service-aspirateur','technical-support','',4,'2016-11-04 17:29:35','2016-12-22 11:51:52','No',NULL,'pg86dcfx9n.jpg'),(5,'Transportation','service-maison','transportation','',5,'2016-11-04 17:30:07','2016-12-22 12:01:36','No',NULL,'6cs0wkdlnj.jpg'),(6,'Personal care','service-aspirateur','personal-care','<h2 class=\"Home-jumbotronTitle\">Quality Pros For a Better Home</h2>\r\n',2,'2016-12-12 16:05:43','2016-12-22 15:51:58','Yes','1dmejdwboq.jpg','ev1dyigrke.jpg'),(7,'B2B','service-aspirateur','b2b','',3,'2016-12-14 00:50:53','2016-12-22 12:11:38','No',NULL,'8yawfbfazw.jpg'),(8,'Others','service-autres','others','',8,'2016-12-14 00:51:15','2016-12-22 12:11:17','No',NULL,'qcuqohe8uc.jpg');
+
+/*Table structure for table `slider` */
+
+DROP TABLE IF EXISTS `slider`;
+
+CREATE TABLE `slider` (
+  `slideid` int(11) NOT NULL AUTO_INCREMENT,
+  `slidetitle` varbinary(255) NOT NULL,
+  `slidename` varchar(255) NOT NULL,
+  `orderid` int(11) NOT NULL,
+  `pagename` varchar(10) DEFAULT NULL,
+  PRIMARY KEY (`slideid`,`orderid`)
+) ENGINE=MyISAM AUTO_INCREMENT=61 DEFAULT CHARSET=latin1;
+
+/*Data for the table `slider` */
+
+insert  into `slider`(`slideid`,`slidetitle`,`slidename`,`orderid`,`pagename`) values (45,'Residential Exterior 2','f1tkutpkvm.jpg',0,'Home'),(42,'Residential Exterior 1','rl5t0vpcwc.jpg',0,'Home'),(43,'Corporate Exterior 1','znp4zcgs80.jpg',0,'Home'),(44,'Pool','3m1aabalzy.jpg',0,'Home'),(53,'Interior Windows','bfcje0vmxv.jpg',0,'Interior'),(57,'Exterior Corporate 1','x3y9gm02dt.jpg',0,'Exterior'),(56,'Exterior Residential','e8hunpbqcv.jpg',0,'Exterior'),(50,'Residential Exterior 4','a5htyxo3d4.jpg',0,'Home'),(49,'Residential Exterior 3','rrc0dma2dc.jpg',0,'Home'),(48,'Corporate Exterior 3','oufhpabeu6.jpg',0,'Home'),(51,'Corporate Exterior 2','h1yminwj2r.jpg',0,'Home'),(54,'Interior Hangar','9hjwzozvlw.jpg',0,'Interior'),(55,'Interior Kitchen','5dtjerfg3g.jpg',0,'Interior'),(58,'Corporate Exterior 2','uvajiotxer.jpg',0,'Exterior'),(60,'test','',0,'Interior');
+
+/*Table structure for table `subservices` */
+
+DROP TABLE IF EXISTS `subservices`;
+
+CREATE TABLE `subservices` (
+  `subserviceid` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `serviceid` int(11) DEFAULT '0',
+  `subservicename` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `subserviceicon` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `subserviceslug` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `subservicedesc` text COLLATE utf8_unicode_ci,
+  `orderid` int(11) DEFAULT '0',
+  `createdat` datetime DEFAULT '0000-00-00 00:00:00',
+  `updatedat` datetime DEFAULT '0000-00-00 00:00:00',
+  `featured` enum('Yes','No') COLLATE utf8_unicode_ci DEFAULT 'No',
+  `featured_image` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`subserviceid`)
+) ENGINE=InnoDB AUTO_INCREMENT=65 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+/*Data for the table `subservices` */
+
+insert  into `subservices`(`subserviceid`,`serviceid`,`subservicename`,`subserviceicon`,`subserviceslug`,`subservicedesc`,`orderid`,`createdat`,`updatedat`,`featured`,`featured_image`) values (6,1,'plumbing','service-poubelle','plumbing','',8,'2016-12-12 16:03:22','2016-12-17 14:50:23','No',NULL),(7,1,'painting','service-poubelle','painting','<p><strong>Lorem Ipsum</strong> is simply dummy text of the printing and typesetting industry.</p>\r\n',15,'2016-12-12 16:04:16','2016-12-15 15:21:44','Yes','3anheml7td.jpg'),(8,1,'baby sitting','service-poubelle','baby-sitting','<div class=\"intro-layer animated slideExpandUp\" data-animation=\"slideExpandUp\" style=\"visibility: hidden;\">\r\n<p class=\"big grey quicksand bottommargin_15\">A tradition of quality cleaning</p>\r\n</div>\r\n\r\n<p class=\"fontsize_20 quicksand\"><strong>Lorem Ipsum</strong> is simply dummy text of the printing and typesetting industry.</p>\r\n',16,'2016-12-12 16:04:50','2016-12-15 15:22:24','No','uaahlapi8q.jpg'),(9,6,'private teacher','service-aspirateur','private-teacher','<p><strong>Lorem Ipsum</strong> is simply dummy text of the printing and typesetting industry.</p>\r\n',4,'2016-12-12 16:07:32','2016-12-14 00:29:03','Yes','6dqmuwfu1v.jpg'),(10,1,'maid sercvices','service-machine-a-laver','maid-sercvices','',17,'2016-12-14 00:52:00',NULL,'No',NULL),(11,1,'carpenter','service-autres','carpenter','',18,'2016-12-14 00:52:14',NULL,'No',NULL),(12,1,'electrecian','service-autres','electrecian','',19,'2016-12-14 00:52:29',NULL,'No',NULL),(13,1,'designer and decorator','service-autres','designer-and-decorator','',20,'2016-12-14 00:53:07',NULL,'No',NULL),(14,1,'handy man','service-aspirateur','handy-man','',21,'2016-12-14 00:53:22',NULL,'No',NULL),(15,1,'wilder','service-autres','wilder','',22,'2016-12-14 00:53:36',NULL,'No',NULL),(16,1,'heating and cooling','service-machine-a-laver','heating-and-cooling','',23,'2016-12-14 12:26:01',NULL,'No',NULL),(17,1,'glass,mirror and windows','service-aspirateur','glassmirror-and-windows','',24,'2016-12-14 12:26:55',NULL,'No',NULL),(18,1,'awings','service-autres','awings','',6,'2016-12-14 12:27:10',NULL,'No',NULL),(19,1,'upholstery and carpet cleaner','service-maison','upholstery-and-carpet-cleaner','',2,'2016-12-14 12:27:35','2016-12-21 15:30:10','No',NULL),(20,1,'fireplace and wood stoves','service-maison','fireplace-and-wood-stoves','',11,'2016-12-14 12:27:52',NULL,'No',NULL),(21,1,'gutters','service-maison','gutters','',7,'2016-12-14 12:28:19',NULL,'No',NULL),(22,1,'furniture repair and refinishing','service-machine-a-laver','furniture-repair-and-refinishing','',5,'2016-12-14 12:28:43',NULL,'No',NULL),(23,1,'home inspection','service-maison','home-inspection','',10,'2016-12-14 12:29:36',NULL,'No',NULL),(24,1,'pests and rat  control','service-maison','pests-and-rat-control','',3,'2016-12-14 12:30:05',NULL,'No',NULL),(25,1,'lock smith','service-machine-a-laver','lock-smith','',9,'2016-12-14 12:30:23',NULL,'No',NULL),(26,1,'power washing','service-commercial','power-washing','',12,'2016-12-14 12:30:39',NULL,'No',NULL),(27,1,'sand blasting','service-maison','sand-blasting','',4,'2016-12-14 12:30:58',NULL,'No',NULL),(28,1,'snow removal','service-poubelle','snow-removal','',13,'2016-12-14 12:31:33',NULL,'No',NULL),(29,1,'sky lights','service-autres','sky-lights','',14,'2016-12-14 12:31:47',NULL,'No',NULL),(30,1,'laundry','service-machine-a-laver','laundry','',25,'2016-12-14 12:32:00',NULL,'No',NULL),(31,6,'trainer','service-autres','trainer','',5,'2016-12-14 12:32:31',NULL,'No',NULL),(32,6,'pampadour','service-vitres','pampadour','',6,'2016-12-14 12:32:48',NULL,'No',NULL),(33,6,'nurse','service-autres','nurse','',3,'2016-12-14 12:33:18',NULL,'No',NULL),(34,6,'massager','service-aspirateur','massager','',7,'2016-12-14 12:33:34','2016-12-14 12:35:03','No',NULL),(35,6,'physical therapy','service-machine-a-laver','physical-therapy','<p>hi</p>\r\n',2,'2016-12-14 12:33:51','2016-12-14 12:34:47','No',NULL),(36,6,'baby sitting','service-poubelle','baby-sitting-1','',8,'2016-12-14 12:34:27',NULL,'No',NULL),(37,4,'tv','service-autres','tv','',4,'2016-12-14 12:37:43',NULL,'No',NULL),(38,4,'computer','service-autres','computer','',3,'2016-12-14 12:38:03',NULL,'No',NULL),(39,4,'wifi','service-machine-a-laver','wifi','',5,'2016-12-14 12:38:18',NULL,'No',NULL),(40,4,'security services','service-machine-a-laver','security-services','',6,'2016-12-14 12:39:14',NULL,'No',NULL),(41,4,'garage doors','service-autres','garage-doors','<p>cv</p>\r\n',2,'2016-12-14 12:39:31',NULL,'No',NULL),(42,4,'car maintenance','service-machine-a-laver','car-maintenance','',7,'2016-12-14 12:39:45',NULL,'No',NULL),(43,5,'taxi','service-vitres','taxi','',44,'2016-12-14 12:40:17',NULL,'No',NULL),(44,5,'moving','service-autres','moving','',45,'2016-12-14 12:40:31',NULL,'No',NULL),(45,5,'driver','service-autres','driver','',46,'2016-12-14 12:40:46',NULL,'No',NULL),(46,5,'car rent','service-autres','car-rent','',47,'2016-12-14 12:41:07','2016-12-15 15:33:15','Yes','foi2gltmhq.jpg'),(47,5,'Pick me Up','service-machine-a-laver','pick-me-up','',48,'2016-12-14 12:41:21',NULL,'No',NULL),(48,2,'design','service-autres','design','',50,'2016-12-14 12:41:48',NULL,'No',NULL),(49,2,'agriculturing','service-machine-a-laver','agriculturing','',51,'2016-12-14 12:42:07',NULL,'No',NULL),(50,2,'cleaning','service-autres','cleaning','',52,'2016-12-14 12:42:27',NULL,'No',NULL),(51,2,'fountains and ponds','service-autres','fountains-and-ponds','',53,'2016-12-14 12:42:50',NULL,'No',NULL),(52,2,'outdoor play grounds','service-autres','outdoor-play-grounds','',54,'2016-12-14 12:43:14',NULL,'No',NULL),(53,2,'swimming pool','service-machine-a-laver','swimming-pool','',55,'2016-12-14 12:43:29',NULL,'No',NULL),(54,2,'tree services','service-aspirateur','tree-services','',56,'2016-12-14 12:43:45',NULL,'No',NULL),(55,2,'lawn and garden care','service-autres','lawn-and-garden-care','',57,'2016-12-14 12:44:06',NULL,'No',NULL),(56,3,'training','service-machine-a-laver','training','',4,'2016-12-14 12:44:22',NULL,'No',NULL),(57,3,'grooming','service-poubelle','grooming','',3,'2016-12-14 12:44:38',NULL,'No',NULL),(58,3,'veternity care','service-autres','veternity-care','',5,'2016-12-14 12:48:05',NULL,'No',NULL),(59,3,'fur care','service-autres','fur-care','',2,'2016-12-14 12:48:22',NULL,'No',NULL),(60,3,'nail clipping','service-autres','nail-clipping','',6,'2016-12-14 12:48:41',NULL,'No',NULL),(61,3,'pet setting','service-autres','pet-setting','',7,'2016-12-14 12:49:08',NULL,'No',NULL),(62,3,'dog walking','service-autres','dog-walking','',8,'2016-12-14 12:49:21',NULL,'No',NULL),(63,7,'cleaning company','service-autres','cleaning-company','',35,'2016-12-14 12:49:41',NULL,'No',NULL),(64,8,'party planner','service-autres','party-planner','',67,'2016-12-14 12:50:01',NULL,'No',NULL);
+
+/*Table structure for table `users` */
+
+DROP TABLE IF EXISTS `users`;
+
+CREATE TABLE `users` (
+  `userid` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `email` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `password` varchar(40) COLLATE utf8_unicode_ci NOT NULL,
+  `mainphone` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
+  `surname` varchar(30) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `picture` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `status` enum('','Active','Blocked') COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `createdat` datetime NOT NULL,
+  `updatedat` datetime DEFAULT NULL,
+  `subserviceid` int(11) DEFAULT NULL,
+  PRIMARY KEY (`userid`)
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+/*Data for the table `users` */
+
+insert  into `users`(`userid`,`name`,`email`,`password`,`mainphone`,`surname`,`picture`,`status`,`createdat`,`updatedat`,`subserviceid`) values (2,'khuswant','khuswant0@gmail.com','e10adc3949ba59abbe56e057f20f883e','7597070244','xcxcxcxc','ersdpxbiel.jpg','Active','2016-09-05 12:17:26','2016-12-21 12:39:08',NULL),(3,'hanwant','hanwant0@gmail.com','e10adc3949ba59abbe56e057f20f883e','7737636535','xcxc','c4rf52136i.jpg','Active','2016-09-05 17:22:31','2016-12-21 12:38:36',NULL),(6,'rahul','rahul@gmail.com','e10adc3949ba59abbe56e057f20f883e','7597070244','singh','jqcsjkisur.png','Active','2016-09-27 17:07:25','2016-12-17 15:14:05',NULL),(9,'rahul','rahulsisodiya.singh3@gmail.com','e10adc3949ba59abbe56e057f20f883e','8233636478','sisodiya','rdeibpreje.jpeg','Active','2016-12-15 18:16:49','2016-12-15 18:19:26',NULL),(10,'rahul','rahul123@gmail.com','e10adc3949ba59abbe56e057f20f883e','8233555555555','singh',NULL,'Active','2016-12-16 12:25:19','2016-12-16 12:25:48',NULL),(11,'service','request@gmail.com','e10adc3949ba59abbe56e057f20f883e','8233636152','sess',NULL,'Active','2016-12-16 15:06:04','2016-12-16 15:06:22',NULL),(12,'tarun','tarun@gmail.com','e10adc3949ba59abbe56e057f20f883e','8236361588','singh',NULL,'Active','2016-12-16 16:23:27','2016-12-16 16:23:46',NULL),(13,'ravi','ravisingh@gmail.com','e10adc3949ba59abbe56e057f20f883e','89669654789','singh',NULL,'Active','2016-12-16 16:55:16','2016-12-16 16:55:32',NULL),(14,'rahul','rahulsingh@gmail.com','e10adc3949ba59abbe56e057f20f883e','823363698','singh','xxnkhgrj07.jpeg','Active','2016-12-16 17:19:34','2016-12-17 15:46:04',NULL),(15,'sarvan','rahulsingh12343@gmail.com','e10adc3949ba59abbe56e057f20f883e','9856412347','singh',NULL,'Active','2016-12-17 11:12:11','2016-12-17 11:12:38',NULL),(16,'rahul','rahulsisodiya@gmail.com','e10adc3949ba59abbe56e057f20f883e','823666654','sisodiya','ughq7aeyjd.jpeg','Active','2016-12-17 11:45:03',NULL,NULL);
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;

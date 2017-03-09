@@ -57,6 +57,21 @@
 
             return $data;
         }
+        public function getallclient()
+        {
+            $data = array();
+            $this->db->select('name');
+            $this->db->from('client');
+            $this->db->order_by('id');
+            $query = $this->db->get();
+
+            foreach ($query->result_array() as $row)
+            {
+                $data[] = $row['name'];
+            }
+
+            return $data;
+        }
 
         public function getallslider_array($filterArr = array())
         {
@@ -103,9 +118,9 @@
             {
                 if (array_key_exists('slideid', $dataValues))
                 {
-                    $this->db->where('slideid', $dataValues['slideid']);
-                    $this->db->update('slider', $dataValues);
-                    $return = $dataValues['slideid'];
+                    $this->db->where('clientid', $dataValues['clientid']);
+                    $this->db->update('client', $dataValues);
+                    $return = $dataValues['clientid'];
                 }
                 else
                 {

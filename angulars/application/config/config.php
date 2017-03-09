@@ -26,7 +26,7 @@
      */
 
     //$config['base_url'] = 'http://localhost/work/aideaumenage/';
-    $config['base_url'] = 'http://localhost/work/paint/';
+    $config['base_url'] = 'http://localhost/work/angulars/angulars';
 
 
     /*

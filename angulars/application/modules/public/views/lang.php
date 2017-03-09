@@ -15,12 +15,12 @@
         </div>
         <div ng-controller="addproduct">
             <ul>
-                <li ng-repeat="x in products">{{x}}</li>
+                <li ng-repeat=" x in products track by $index">{{x}}</li>
             </ul>
             <input ng-model="addMe">
             <button ng-click="addItem()">Add</button>
             <div class="success">{{message}}</div>
-          
+
         </div>
 
 

@@ -16,6 +16,7 @@
     $route['lang'] = 'public/index/lang';
     $route['contact'] = 'public/index/contact';
     $route['savecompany_json'] = 'public/index/savecompany_json';
+    $route['getclient_json'] = 'public/index/getclient_json';
 
 
     $route['admin'] = 'admin/users';
